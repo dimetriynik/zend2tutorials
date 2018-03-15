@@ -10,25 +10,43 @@
 return array(
 
 
-
-
     'controllers' => array(
         'invokables' => array(
             'Admin\Controller\Index' => Admin\Controller\IndexController::class,
+            'category' => Admin\Controller\CategoryController::class
         ),
     ),
     'router' => array(
         'routes' => array(
             'admin' => array(
-                'type'    => 'literal',
+                'type' => 'literal',
                 'options' => array(
-                    'route'    => '/admin/',
+                    'route' => '/admin/',
                     'defaults' => array(
                         'controller' => 'Admin\Controller\Index',
-                        'action'     => 'index',
+                        'action' => 'index',
                     ),
                 ),
+                'may_terminate' => true,
+
+                'child_routes' => [
+                    'category' => [
+                        'type' => 'segment',
+                        'options' => [
+                            'route' => 'category/[:action/][:id/]',
+                            'defaults' => [
+                                'controller' => 'category',
+                                'action' => 'index'
+                            ]
+                        ]
+                    ]
+                ] // < child routes
+
             ),
+
+
+
+
         ),
     ),
     'view_manager' => array(

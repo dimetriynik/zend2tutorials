@@ -1,0 +1,42 @@
+<h1>Категории</h1>
+
+
+<table class="table table-bordered table-hover">
+    <thead>
+    <tr>
+        <th>#</th>
+        <th>Ключ</th>
+        <th>Название</th>
+        <th>Действие</th>
+    </tr>
+    </thead>
+    <tbody>
+    <?php
+    /**
+     * @var $category  \Blog\Entity\Category
+     */
+    foreach ($categories as $category):
+        ?>
+        <tr>
+            <td><?= $category->getId(); ?></td>
+            <td><?= $category->getCategoryKey() ?></td>
+            <td><?= $category->getCategoryName() ?></td>
+            <td><a href="
+         <?=
+                $this->url('admin/category', ['action' => 'edit', 'id' => $category->getId()])
+                ?>">Edit</a>
+                <a href="
+             <?=
+                $this->url('admin/category', ['action' => 'delete', 'id' => $category->getId()])
+                ?>">
+                  delete
+                </a></td>
+        </tr>
+
+    <?php
+    endforeach;
+    ?>
+
+    </tbody>
+</table>
+<?php
