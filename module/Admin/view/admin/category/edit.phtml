@@ -1,0 +1,84 @@
+<?php
+/**
+ * @var $form \Admin\Form\CategoryAddForm
+ */
+$form->setAttribute('action', $this->url('admin/category', ['action' => 'edit' , 'id' => $id]));
+$form->prepare();
+
+
+echo $this->form()->openTag($form);
+?>
+    <div class="bs-docs-section">
+        <div class="well">
+            <fieldset>
+                <legend>
+                    Редактирование категории
+                </legend>
+
+
+                <?php
+
+                foreach ($form as $element):
+                    ?>
+
+                    <div class="form-group">
+                        <?php
+                        $attributes = $element->getAttributes();
+
+
+                        if ($element->getLabel()) {
+                            $element->setLabelAttributes(['class' => 'col-lg-2 control0label']);
+                            if (isset($attributes['required'])) {
+                                $element->setLabel($element->getLabel() . '*');
+                            }
+                        }
+
+
+                        if (isset($attributes['type']) && $attributes['type'] == 'text') {
+                            echo $this->formLabel($element);
+                            ?>
+                            <div class="col-lg-10">
+                                <?=
+                                $this->formInput($element);
+                                ?>
+                            </div>
+                            <?php
+
+                        } elseif (isset($attributes['type']) && $attributes['type'] == 'textarea') {
+                            echo $this->formLabel($element);
+                            ?>
+                            <div class="col-lg-10">
+                                <?= $this->formTextArea($element) ?>
+                            </div>
+                            <?php
+                        } elseif (isset($attributes['type']) && $attributes['type'] == 'file') {
+                            echo $this->formLabel($element);
+                            ?>
+                            <div class="col-lg-10">
+                                <?= $this->formFile($element) ?>
+                            </div>
+                            <?php
+                        } else {
+                            ?>
+                            <div class="col-lg-10">
+                                <?= $this->formRow($element) ?>
+                            </div>
+                            <?php
+
+                        }
+
+                        ?>
+
+                    </div>
+
+                <?php
+                endforeach;
+                ?>
+            </fieldset>
+        </div>
+    </div>
+<?php
+
+
+$this->form()->closeTag();
+

@@ -1,5 +1,5 @@
 <?php
-namespace Album\Model;
+namespace Blog\Model;
 
 use Zend\Db\TableGateway\TableGateway;
 

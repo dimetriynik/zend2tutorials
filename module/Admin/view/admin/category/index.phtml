@@ -1,5 +1,22 @@
 <h1>Категории</h1>
+<a href="/admin/category/add/">Добавить</a><br><br>
+<?php
+$flash = $this->flashMessenger();
+$flash->setMessageOpenFormat('
+<div%s><button type="button" class="close" data-dismiss="alert" aria-hidden="true" >
+&times;
+</button>
+<ul><li>
+')
+    ->setMessageSeparatorString('</li></li>')
+    ->setMessageCloseString('</li></ul></div>');
 
+echo $flash->render('error', ['alert','alert-dismissable','alert-danger']);
+echo $flash->render('info',['alert','alert-dismissable','alert-info']);
+echo $flash->render('defaults',['alert','alert-dismissable','alert-warning']);
+echo $flash->render('success',['alert','alert-dismissable','alert-success']);
+
+?>
 
 <table class="table table-bordered table-hover">
     <thead>
@@ -29,7 +46,7 @@
              <?=
                 $this->url('admin/category', ['action' => 'delete', 'id' => $category->getId()])
                 ?>">
-                  delete
+                    delete
                 </a></td>
         </tr>
 

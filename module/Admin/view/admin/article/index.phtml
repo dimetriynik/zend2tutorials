@@ -1,0 +1,78 @@
+<h1>Статьи</h1>
+<a href="/admin/article/add/">Добавить</a><br><br>
+<?php
+$flash = $this->flashMessenger();
+$flash->setMessageOpenFormat('
+<div%s><button type="button" class="close" data-dismiss="alert" aria-hidden="true" >
+&times;
+</button>
+<ul><li>
+')
+    ->setMessageSeparatorString('</li></li>')
+    ->setMessageCloseString('</li></ul></div>');
+
+echo $flash->render('error', ['alert', 'alert-dismissable', 'alert-danger']);
+echo $flash->render('info', ['alert', 'alert-dismissable', 'alert-info']);
+echo $flash->render('defaults', ['alert', 'alert-dismissable', 'alert-warning']);
+echo $flash->render('success', ['alert', 'alert-dismissable', 'alert-success']);
+//
+//?>
+
+<table class="table table-bordered table-hover">
+    <thead>
+    <tr>
+        <th>#</th>
+        <th>Категория</th>
+        <th>Заголовок</th>
+        <th>Статья</th>
+        <th>Короткое описание</th>
+        <th>Опубликовано</th>
+        <th>Действие</th>
+    </tr>
+    </thead>
+    <tbody>
+    <?php
+    /**
+     * @var $article  \Blog\Entity\Article
+     */
+    foreach ($articles as $article):
+        $categoryRepositary = $article->getCategory();
+        $category = '';
+        if ($categoryRepositary) {
+            $category = $categoryRepositary->getCategoryKey();
+        }
+
+        $publish = "Нет";
+        if ($article->getIsPublic()) {
+            $publish = "Да";
+        }
+
+
+        ?>
+        <tr>
+            <td><?= $article->getId(); ?></td>
+            <td><?= $category ?></td>
+            <td><?= $article->getTitle() ?></td>
+            <td><?= $article->getArticle() ?></td>
+            <td><?= $article->getShortArticle() ?></td>
+            <td><?= $publish ?></td>
+            <td><a href="
+         <?=
+                $this->url('admin/article', ['action' => 'edit', 'id' => $article->getId()])
+                ?>">Edit</a>
+                <a href="
+             <?=
+                $this->url('admin/article', ['action' => 'delete', 'id' => $article->getId()])
+                ?>">
+                    delete
+                </a></td>
+        </tr>
+
+    <?php
+    endforeach;
+    //    ?>
+
+    </tbody>
+</table>
+<?php
+echo $this->paginationConrol($articles, 'Sliding', 'pagination_control', ['route' => 'admin/article']);
